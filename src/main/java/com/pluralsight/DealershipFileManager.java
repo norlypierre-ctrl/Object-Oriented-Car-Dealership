@@ -1,7 +1,9 @@
 package com.pluralsight;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 public class DealershipFileManager {
@@ -25,19 +27,22 @@ public class DealershipFileManager {
 
             String vehicleLine;
             while ((vehicleLine = bufferedReader.readLine()) != null){
+                if (vehicleLine.trim().isEmpty()) continue;
+
                 String[] parts = vehicleLine.split("\\|");
 
                 int vin = Integer.parseInt(parts[0]);
                 int year = Integer.parseInt(parts[1]);
-                int odometer = Integer.parseInt(parts[2]);
-                String make = parts[3];
-                String model = parts[4];
-                String vehicleType = parts[5];
-                String color = parts[6];
+                String make = parts[2];
+                String model = parts[3];
+                String vehicleType = parts[4];
+                String color = parts[5];
+                int odometer = Integer.parseInt(parts[6]);
                 double price = Double.parseDouble(parts[7]);
 
                 Vehicle vehicle = new Vehicle(vin, year, odometer, make, model,
                         vehicleType, color, price);
+            if (dealership != null)
                 dealership.addVehicle(vehicle);
             }
         }catch (IOException e) {
@@ -46,5 +51,20 @@ public class DealershipFileManager {
          return  dealership;
         }
         public void  saveDealership(Dealership dealership){
+            try (BufferedWriter writer = new BufferedWriter(new FileWriter(File_Path))) {
+
+                writer.write(dealership.getName() + "|" + dealership.getAddress() + "|" + dealership.getPhone());
+                writer.newLine();
+
+                for (Vehicle v : dealership.getAllVehicles()) {
+                    writer.write(v.getVin() + "|" + v.getYear() + "|" + v.getMake() + "|" +
+                            v.getModel() + "|" + v.getVehicleType() + "|" + v.getColor() + "|" +
+                            v.getOdometer() + "|" + v.getPrice());
+                    writer.newLine();
+                }
+                System.out.println("Dealership Saved Successfully.");
+            } catch (IOException e) {
+                System.out.println("Error Saving File: " + e.getMessage());
+            }
         }
 }
