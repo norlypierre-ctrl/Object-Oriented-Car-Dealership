@@ -31,7 +31,7 @@ public class UserInterface {
                     processGetByColorRequest();
                     break;
                 case 5:
-                    processGetByMileageequest();
+                    processGetByMileageRequest();
                     break;
                 case 6:
                     processGetByVehicleTypeRequest();
@@ -86,14 +86,87 @@ public class UserInterface {
         }
     }
 
-    private void processGetByPriceRequest(){}
-    private void processGetByMakeModelRequest(){}
-    private void processGetByYearRequest(){}
-    private void processGetByColorRequest(){}
-    private void processGetByMileageequest(){}
-    private void processGetByVehicleTypeRequest(){}
-    private void processGetByAddVehicleRequest(){}
-    private void processGetByRemoveVehicleRequest(){}
+    private void processGetByPriceRequest(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Minimum Price: ");
+        double min = Double.parseDouble(scanner.nextLine());
+
+        System.out.println("Enter Maximum Price: ");
+        double max = Double.parseDouble(scanner.nextLine());
+
+        List<Vehicle> vehicles = dealership.getVehiclesByPrice(min, max);
+        displayVehicles(vehicles);
+}
+
+    private void processGetByMakeModelRequest(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Make: ");
+        String make = scanner.nextLine();
+
+        System.out.println("Enter Model: ");
+        String model = scanner.nextLine();
+
+        List<Vehicle> vehicles = dealership.getVehiclesByMakeModel(make, model);
+        displayVehicles(vehicles);
+    }
+
+    private void processGetByYearRequest(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Minimum Year: ");
+        int minYear = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter Maximum Year: ");
+        double maxYear = Integer.parseInt(scanner.nextLine());
+
+        List<Vehicle> vehicles = dealership.getVehiclesByPrice(minYear, maxYear);
+        displayVehicles(vehicles);
+    }
+
+    private void processGetByColorRequest(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Color: ");
+        String color = scanner.nextLine();
+
+        List<Vehicle> vehicles = dealership.getVehiclesByColor(color);
+        displayVehicles(vehicles);
+    }
+
+    private void processGetByMileageRequest(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Minimum Mileage: ");
+        int min = Integer.parseInt(scanner.nextLine());
+
+        System.out.println("Enter Maximum Mileage: ");
+        double max = Integer.parseInt(scanner.nextLine());
+
+        List<Vehicle> vehicles = dealership.getVehiclesByPrice(min, max);
+        displayVehicles(vehicles);
+    }
+
+    private void processGetByVehicleTypeRequest(){
+        Scanner scanner = new Scanner(System.in);
+
+        System.out.println("Enter Vehicle Type (car, SUV, Truck, Van): ");
+        String type = scanner.nextLine();
+
+        List<Vehicle> vehicles = dealership.getVehiclesByColor(type);
+        displayVehicles(vehicles);
+    }
+
+    private void processGetByAddVehicleRequest(){
+        DealershipFileManager fileManager = new DealershipFileManager();
+        fileManager.saveDealership(dealership);
+    }
+
+    private void processGetByRemoveVehicleRequest(){
+        DealershipFileManager fileManager = new DealershipFileManager();
+        fileManager.saveDealership(dealership);
+    }
 
     private void processGetByGetAllVehicleRequest(){
         List<Vehicle> vehicles = dealership.getAllVehicles();
